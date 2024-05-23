@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:emg_sensor/globals.dart';
+import 'package:emg_sensor/widgets/send_data_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -136,6 +138,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
           .where((service) =>
               service.serviceUuid.str == "6e400001-b5a3-f393-e0a9-e50e24dcca9e")
           .toList();
+      Globals.deviceId = widget.device.advName;
+      Globals.startTime = DateTime.now();
       Snackbar.show(ABC.c, "Discover Services: Success", success: true);
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Discover Services Error:", e),
@@ -326,7 +330,11 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 // trailing: buildGetServices(context),
               ),
               // buildMtuTile(context),
-              _buildServiceTiles(context, widget.device),
+              if (isConnected) _buildServiceTiles(context, widget.device),
+              if (isConnected)
+                SendDataTile(
+                  onSendData: onDisconnectPressed,
+                ),
             ],
           ),
         ),

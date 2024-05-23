@@ -12,6 +12,7 @@ import 'screens/bluetooth_off_screen.dart';
 import 'screens/scan_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

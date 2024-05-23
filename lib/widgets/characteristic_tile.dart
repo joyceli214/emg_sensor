@@ -183,7 +183,7 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [GraphTile(valueList: _actualValueList), SendDataTile()],
+      children: [GraphTile(valueList: _actualValueList)],
     );
     // return ExpansionTile(
     //   title: ListTile(
