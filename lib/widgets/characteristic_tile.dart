@@ -25,7 +25,7 @@ class CharacteristicTile extends StatefulWidget {
 
 class _CharacteristicTileState extends State<CharacteristicTile> {
   List<int> _value = [];
-  List<int> _actualValueList = List.filled(30, 0, growable: true);
+  List<int> _actualValueList = List.filled(500, 0, growable: true);
   int lastTimestamp = 0;
 
   late StreamSubscription<List<int>> _lastValueSubscription;
@@ -35,13 +35,14 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
     super.initState();
     _lastValueSubscription =
         widget.characteristic.lastValueStream.listen((value) {
-      int actualValue = value.length == 8 ? (value[4] * 16 + value[5]) : 0;
+      print(value);
+      int actualValue = value.length == 8 ? (value[4] + value[5] * 256) : 0;
       int timestamp = DateTime.now().millisecondsSinceEpoch;
-      if ((timestamp - lastTimestamp) >= 200) {
-        _actualValueList.removeAt(0);
-        lastTimestamp = timestamp;
-        _actualValueList.add(actualValue);
-      }
+      // if ((timestamp - lastTimestamp) >= 20) {
+      _actualValueList.removeAt(0);
+      lastTimestamp = timestamp;
+      _actualValueList.add(actualValue);
+      // }
       _value = value;
       if (mounted) {
         setState(() {});

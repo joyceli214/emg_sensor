@@ -7,19 +7,38 @@ class GraphTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(valueList.toString());
     return SizedBox(
       height: 200,
       child: LineChart(
         duration: const Duration(milliseconds: 20),
-        LineChartData(lineBarsData: [
-          LineChartBarData(
+        LineChartData(
+          lineBarsData: [
+            LineChartBarData(
+              dotData: const FlDotData(
+                show: false,
+                // checkToShowDot: (spot, barData) => spot.x % 20 == 0,
+              ),
               spots: List<FlSpot>.generate(
-                  valueList.length,
-                  (index) => FlSpot(
-                      index.toDouble(), valueList.elementAt(index).toDouble())))
-        ]
-            // read about it in the LineChartData section
+                valueList.length,
+                (index) => FlSpot(
+                  index + .0,
+                  valueList.elementAt(index).roundToDouble(),
+                ),
+              ),
             ),
+          ],
+          minY: 0,
+          maxY: 10000,
+          titlesData: const FlTitlesData(
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            topTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+          ),
+        ),
       ),
     );
     ;

@@ -12,9 +12,14 @@ class SendDataTile extends StatefulWidget {
 }
 
 class _SendDataTileState extends State<SendDataTile> {
+  static const _mongoUri = String.fromEnvironment('MONGO_URI');
+
   Future<Db> connectDb() async {
-    var db = await Db.create(
-        "MONGO_URI_REDACTED");
+    if (_mongoUri.isEmpty) {
+      throw StateError(
+          'Missing MONGO_URI. Pass it with --dart-define=MONGO_URI=...');
+    }
+    var db = await Db.create(_mongoUri);
     await db.open();
     return db;
   }
